@@ -42,7 +42,7 @@ class TestHtmlNode(TestCase):
         node = LeafNode(None, "Hello, World!")
         self.assertEqual(node.to_html(), "Hello, World!")
 
-    def test_parent_node_to_html_works(self):
+    def to_html_works_with_many_children(self):
         node1 = ParentNode(
             "div",
             [
@@ -69,3 +69,9 @@ class TestHtmlNode(TestCase):
             node2.to_html(),
             '<p><b class="test" id="test">bold text</b>Normal text<i class="test" id="test">italic text</i><a href="https://www.example.com">link</a></p>',
         )
+
+    def test_to_html_works_with_grandchildren(self):
+        grandchild_node = LeafNode("b", "grandchild")
+        child_node = ParentNode("span", [grandchild_node])
+        node = ParentNode("div", [child_node])
+        self.assertEqual(node.to_html(), "<div><span><b>grandchild</b></span></div>")
