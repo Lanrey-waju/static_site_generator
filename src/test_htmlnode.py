@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 
 class TestHtmlNode(TestCase):
@@ -14,9 +14,6 @@ class TestHtmlNode(TestCase):
     def test_props_to_html_works_when_no_props(self):
         node = HTMLNode("div", "Hello, World!", children=None, props=None)
         self.assertEqual(node.props_to_html(), "")
-
-
-class TestLeafNode(TestCase):
 
     def test_leaf_node_raises_error_when_value_is_none(self):
         with self.assertRaises(ValueError):
@@ -44,3 +41,31 @@ class TestLeafNode(TestCase):
     def test_to_html_no_tag(self):
         node = LeafNode(None, "Hello, World!")
         self.assertEqual(node.to_html(), "Hello, World!")
+
+    def test_parent_node_to_html_works(self):
+        node1 = ParentNode(
+            "div",
+            [
+                LeafNode("b", "bold text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+            ],
+        )
+        node2 = ParentNode(
+            "p",
+            [
+                LeafNode("b", "bold text", props={"class": "test", "id": "test"}),
+                LeafNode(None, "Normal text", props={"class": "test", "id": "test"}),
+                LeafNode("i", "italic text", props={"class": "test", "id": "test"}),
+                LeafNode("a", "link", props={"href": "https://www.example.com"}),
+            ],
+        )
+        self.assertEqual(
+            node1.to_html(),
+            "<div><b>bold text</b>Normal text<i>italic text</i>Normal text</div>",
+        )
+        self.assertEqual(
+            node2.to_html(),
+            '<p><b class="test" id="test">bold text</b>Normal text<i class="test" id="test">italic text</i><a href="https://www.example.com">link</a></p>',
+        )
