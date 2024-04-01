@@ -1,3 +1,5 @@
+import re
+
 from htmlnode import LeafNode
 
 text_type_text = "text"
@@ -27,9 +29,10 @@ class TextNode:
     def __repr__(self):
         return f"{TextNode}({self.text}, {self.text_type}, {self.url})"
 
+
 def text_node_to_html_node(text_node):
     if text_node.text_type == text_type_text:
-        return LeafNode(text_node.text, tag=None")
+        return LeafNode(text_node.text, tag=None)
     elif text_node.text_type == text_type_bold:
         return LeafNode(text_node.text, tag="b")
     elif text_node.text_type == text_type_italics:
@@ -39,9 +42,8 @@ def text_node_to_html_node(text_node):
     elif text_node.text_type == text_type_code:
         return LeafNode(text_node.text, tag="code")
     elif text_node.text_type == text_type_image:
-        return LeafNode("", tag="img", props={"src": text_node.url, "alt": text_node.text}))
+        return LeafNode(
+            "", tag="img", props={"src": text_node.url, "alt": text_node.text}
+        )
     else:
         raise ValueError("Invalid text type: {textnode.text_type}")
-
-
-
