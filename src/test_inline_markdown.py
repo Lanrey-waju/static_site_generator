@@ -66,3 +66,15 @@ class TestInlineMarkdown(TestCase):
         text = "This is a text with a [link](https://testfunction.com)"
         matches = [("link", "https://testfunction.com")]
         self.assertListEqual(extract_markdown_links(text), matches)
+
+    def test_delim_code(self):
+        node = TextNode("This is text with a `code block` word", text_type_text)
+        new_nodes = split_nodes_delimiter([node], "`", text_type_code)
+        self.assertListEqual(
+            [
+                TextNode("This is text with a ", text_type_text),
+                TextNode("code block", text_type_code),
+                TextNode(" word", text_type_text),
+            ],
+            new_nodes,
+        )
