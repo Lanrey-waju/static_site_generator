@@ -5,7 +5,13 @@ from inline_markdown import (
     extract_markdown_images,
     extract_markdown_links,
 )
-from textnode import TextNode, text_type_text, text_type_bold, text_type_italics
+from textnode import (
+    TextNode,
+    text_type_text,
+    text_type_bold,
+    text_type_italics,
+    text_type_code,
+)
 
 
 class TestInlineMarkdown(TestCase):
