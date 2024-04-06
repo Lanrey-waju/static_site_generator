@@ -4,6 +4,7 @@ from inline_markdown import (
     split_nodes_delimiter,
     extract_markdown_images,
     extract_markdown_links,
+    split_nodes_image,
 )
 from textnode import (
     TextNode,
@@ -11,6 +12,7 @@ from textnode import (
     text_type_bold,
     text_type_italics,
     text_type_code,
+    text_type_image,
 )
 
 
@@ -81,6 +83,24 @@ class TestInlineMarkdown(TestCase):
                 TextNode("This is text with a ", text_type_text),
                 TextNode("code block", text_type_code),
                 TextNode(" word", text_type_text),
+            ],
+            new_nodes,
+        )
+
+    def test_split_images(self):
+        node = TextNode(
+            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
+            text_type_text,
+        )
+        new_nodes = split_nodes_image([node])
+        self.assertListEqual(
+            [
+                TextNode("This is text with an ", text_type_text),
+                TextNode("image", text_type_image, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode(" and another ", text_type_text),
+                TextNode(
+                    "second image", text_type_image, "https://i.imgur.com/3elNhQu.png"
+                ),
             ],
             new_nodes,
         )
