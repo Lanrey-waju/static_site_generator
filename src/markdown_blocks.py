@@ -1,5 +1,5 @@
-def markdown_to_blocks(text):
-    blocks = text.split("\n\n")
+def markdown_to_blocks(markdown_text):
+    blocks = markdown_text.split("\n\n")
     stripped_blocks = []
     for block in blocks:
         if block == "":
