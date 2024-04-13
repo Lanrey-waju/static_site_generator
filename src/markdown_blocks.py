@@ -15,7 +15,7 @@ def block_to_block_type(markdown):
         return block_type_code
     if markdown.startswith("* "):
         return block_type_unordered_list
-    if markdown.startswith("1. "):
+    if markdown.startswith(r"(\d\.) "):
         return block_type_ordered_list
     return block_type_paragraph
 
