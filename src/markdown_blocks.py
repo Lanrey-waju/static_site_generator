@@ -6,16 +6,27 @@ block_type_unordered_list = "unordered_list"
 block_type_ordered_list = "ordered_list"
 
 
-def block_to_block_type(markdown):
-    if markdown.startswith("# "):
+def block_to_block_type(block):
+    lines = block.split("\n")
+    if (
+        block.startswith("# ")
+        or block.startswith("## ")
+        or block.startswith("### ")
+        or block.startswith("#### ")
+        or block.startswith("##### ")
+        or block.startswith("###### ")
+    ):
         return block_type_heading
-    if markdown.startswith("> "):
+    if block.startswith(">"):
+        for line in lines:
+            if not line.startswith(">"):
+                return block_type_paragraph
         return block_type_quote
-    if markdown.startswith("```") and markdown.endswith("```"):
+    if block.startswith("```") and block.endswith("```"):
         return block_type_code
-    if markdown.startswith("* "):
+    if block.startswith("* "):
         return block_type_unordered_list
-    if markdown.startswith(r"(\d\.) "):
+    if block.startswith(r"(\d\.) "):
         return block_type_ordered_list
     return block_type_paragraph
 
