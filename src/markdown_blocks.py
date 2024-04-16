@@ -22,11 +22,23 @@ def block_to_block_type(block):
             if not line.startswith(">"):
                 return block_type_paragraph
         return block_type_quote
-    if block.startswith("```") and block.endswith("```"):
+    if len(lines) > 1 and lines[0].startswith("```") and lines[-1].startswith("```"):
         return block_type_code
     if block.startswith("* "):
+        for line in lines:
+            if not line.startswith("* "):
+                return block_type_paragraph
         return block_type_unordered_list
-    if block.startswith(r"(\d\.) "):
+    if block.startswith("- "):
+        for line in lines:
+            if not line.startswith("- "):
+                return block_type_paragraph
+    if block.startswith("1. "):
+        i = 1
+        for line in lines:
+            if not line.startswith(f"{i}. "):
+                return block_type_paragraph
+            i += 1
         return block_type_ordered_list
     return block_type_paragraph
 
