@@ -1,3 +1,5 @@
+from htmlnode import ParentNode
+
 block_type_paragraph = "paragraph"
 block_type_heading = "heading"
 block_type_code = "code"
@@ -41,6 +43,11 @@ def block_to_block_type(block):
             i += 1
         return block_type_ordered_list
     return block_type_paragraph
+
+
+def paragraph_block_to_html_node(block):
+    lines = block.split("\n")
+    paragraph = " ".join(lines)
 
 
 def markdown_to_blocks(markdown_text):
