@@ -35,6 +35,7 @@ def block_to_block_type(block):
         for line in lines:
             if not line.startswith("- "):
                 return block_type_paragraph
+        return block_type_unordered_list
     if block.startswith("1. "):
         i = 1
         for line in lines:
