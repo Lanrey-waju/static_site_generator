@@ -23,7 +23,7 @@ def markdown_to_html_node(markdown):
 def block_to_html_node(block):
     block_type = block_to_block_type(block)
     if block_type == block_type_paragraph:
-        return text_to_paragraph(block)
+        return paragraph_block_to_html_node(block)
     if block_type == block_type_heading:
         return heading_to_html_node(block)
     if block_type == block_type_code:
@@ -135,7 +135,7 @@ def ordered_list_to_html_node(block):
     items = block.split("\n")
     html_items = []
     for item in items:
-        text = item[2:]
+        text = item[3:]
         children = text_to_children(text)
         html_items.append(ParentNode("li", children))
     return ParentNode("ol", html_items)
@@ -157,8 +157,7 @@ def quote_to_html_node(block):
     for line in lines:
         if not line.startswith(">"):
             raise ValueError("Invalid blockquote markdown")
-        new_lines.append(line.lstrip("> ").strip())
+        new_lines.append(line.lstrip(">").strip())
     content = " ".join(new_lines)
     children = text_to_children(content)
-    html_lines.append(ParentNode("p", children))
-    return ParentNode("blockquote", new_lines)
+    return ParentNode("blockquote", children)

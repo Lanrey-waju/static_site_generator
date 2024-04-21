@@ -17,7 +17,7 @@ class TestHtmlNode(TestCase):
 
     def test_leaf_node_raises_error_when_value_is_none(self):
         with self.assertRaises(ValueError):
-            LeafNode(None).to_html()
+            LeafNode(None, None).to_html()
 
     def test_to_html_works(self):
         div_node = LeafNode(

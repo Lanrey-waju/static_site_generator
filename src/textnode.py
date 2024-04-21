@@ -32,18 +32,16 @@ class TextNode:
 
 def text_node_to_html_node(text_node):
     if text_node.text_type == text_type_text:
-        return LeafNode(text_node.text, tag=None)
+        return LeafNode(None, text_node.text)
     elif text_node.text_type == text_type_bold:
-        return LeafNode(text_node.text, tag="b")
+        return LeafNode("b", text_node.text)
     elif text_node.text_type == text_type_italics:
-        return LeafNode(text_node.text, tag="i")
+        return LeafNode("i", text_node.text)
     elif text_node.text_type == text_type_link:
-        return LeafNode(text_node.text, tag="a", props={"href": text_node.url})
+        return LeafNode("a", text_node.text, props={"href": text_node.url})
     elif text_node.text_type == text_type_code:
-        return LeafNode(text_node.text, tag="code")
+        return LeafNode("code", text_node.text)
     elif text_node.text_type == text_type_image:
-        return LeafNode(
-            "", tag="img", props={"src": text_node.url, "alt": text_node.text}
-        )
+        return LeafNode("", "img", props={"src": text_node.url, "alt": text_node.text})
     else:
         raise ValueError("Invalid text type: {textnode.text_type}")
