@@ -109,14 +109,13 @@ def paragraph_block_to_html_node(block):
 
 def heading_to_html_node(block):
     level = 0
-
     for char in block:
         if char == "#":
             level += 1
         else:
             break
-    if level + 1 > 6:
-        raise ValueError("Heading level too high")
+    if level > 6:
+        raise ValueError(f"Invalid heading level: {level}")
     text = block[level + 1 :]
     children = text_to_children(text)
     return ParentNode(f"h{level}", children)
