@@ -75,11 +75,6 @@ def block_to_block_type(block):
     return block_type_paragraph
 
 
-def paragraph_block_to_html_node(block):
-    lines = block.split("\n")
-    paragraph = " ".join(lines)
-
-
 def markdown_to_blocks(markdown_text):
     blocks = markdown_text.split("\n\n")
     stripped_blocks = []
@@ -160,3 +155,11 @@ def quote_to_html_node(block):
     content = " ".join(new_lines)
     children = text_to_children(content)
     return ParentNode("blockquote", children)
+
+
+def extract_title(markdown):
+    blocks = markdown_to_blocks(markdown)
+    if not blocks[0].startswith("# "):
+        raise Exception("No title found")
+    title = blocks[0][2:]
+    return title

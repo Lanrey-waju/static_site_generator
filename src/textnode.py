@@ -42,6 +42,8 @@ def text_node_to_html_node(text_node):
     elif text_node.text_type == text_type_code:
         return LeafNode("code", text_node.text)
     elif text_node.text_type == text_type_image:
-        return LeafNode("", "img", props={"src": text_node.url, "alt": text_node.text})
+        return LeafNode(
+            "img", text_node.text, props={"src": text_node.url, "alt": text_node.text}
+        )
     else:
         raise ValueError("Invalid text type: {textnode.text_type}")

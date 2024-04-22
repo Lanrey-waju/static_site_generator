@@ -10,6 +10,7 @@ from markdown_blocks import (
     block_type_ordered_list,
     block_type_unordered_list,
     block_type_quote,
+    extract_title,
 )
 
 
@@ -156,3 +157,16 @@ this is paragraph text
             html,
             "<div><blockquote>This is a blockquote block</blockquote><p>this is paragraph text</p></div>",
         )
+
+    def test_extract_title(self):
+        md = """ # This is the title
+
+
+        
+        ## This is not a title"""
+        self.assertEqual(extract_title(md), "This is the title")
+
+    def test_no_title_exception(self):
+        md = """## This is not a title"""
+        with self.assertRaises(Exception):
+            extract_title(md)
