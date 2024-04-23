@@ -2,22 +2,22 @@ import os
 import shutil
 
 from copystatic import recursive_copy
-from genpage import generate_page
+from genpage import generate_pages_recursively
 
-source_path = "./static"
-destination_path = "./public"
+dir_path_static = "./static"
+dir_path_public = "./public"
 
-from_path = "./content/index.md"
-template_path = "template.html"
-dest_path = "./public/index.html"
+dir_path_content = "./content"
+template_path = "./template.html"
 
 
 def main():
     print("Deleting public directory...")
-    if os.path.exists(destination_path):
-        shutil.rmtree(destination_path)
-    recursive_copy(source_path, destination_path)
-    generate_page(from_path, template_path, dest_path)
+    if os.path.exists(dir_path_public):
+        shutil.rmtree(dir_path_public)
+    recursive_copy(dir_path_static, dir_path_public)
+    # generate_page(dir_path_content, template_path, dir_path_public + "/index.html")
+    generate_pages_recursively(dir_path_content, template_path, dir_path_public)
 
 
 main()
